@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Local environment variables
+.env
+.env.*     # Covers .env.development, .env.production, etc.
+
+# Vite cache
+.vite/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor/IDE files
+.vscode/
+.idea/
+.DS_Store
+
+# Dependency locks
+package-lock.json
+
+# Optional: OS-specific
+Thumbs.db
