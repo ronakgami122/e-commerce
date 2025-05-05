@@ -5,7 +5,6 @@ import { URLS } from "../constants/urls";
 const withAuth = (RenderComponent) => {
   const WrappedComponent = (props) => {
     const token = localStorage.getItem("token");
-    console.log("token :>> ", token);
     if (token) {
       return <Navigate to={URLS.INITIAL} replace />;
     }

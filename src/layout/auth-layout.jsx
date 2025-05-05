@@ -1,8 +1,18 @@
-import React from 'react'
-import withAuth from '../hoc/with-auth'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import withAuth from "../hoc/with-auth";
+import { Outlet } from "react-router-dom";
+import CustomHeader from "../shared/customHeader";
+import CustomFooter from "../shared/customFooter";
 
-// Simply apply the HOC to Outlet component
-const AuthLayout = withAuth(Outlet)
+const NewOutlet = withAuth(Outlet);
 
-export default AuthLayout
+const AuthLayout = () => {
+  return (
+    <>
+      <CustomHeader />
+      <NewOutlet />
+      <CustomFooter />
+    </>
+  );
+};
+export default AuthLayout;

@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import Login from "../containers/auth/login";
 import { URLS } from "../constants/urls";
+import Home from "../containers/home";
+import Products from "../containers/products";
 
 const useRoutes = () => {
   const allRoutes = useMemo(
@@ -8,19 +10,25 @@ const useRoutes = () => {
       {
         id: "root",
         path: URLS.INITIAL,
-        element: <div>Home Page</div>,
+        element: <Home />,
         isPublic: true,
       },
       {
         id: "products",
         path: URLS.PRODUCTS,
-        element: <div>Products Page</div>,
+        element: <Products />,
         isPublic: true,
       },
       {
         id: "product",
-        path: URLS.PRODUCT,
+        path: URLS.PRODUCTS + "/:id",
         element: <div>Single Product Page</div>,
+        isPublic: true,
+      },
+      {
+        id: "wishlist",
+        path: URLS.WISHLIST,
+        element: <div>Favorite Items(Wishlist)</div>,
         isPublic: true,
       },
       {
@@ -49,7 +57,7 @@ const useRoutes = () => {
       },
       {
         id: "order",
-        path: URLS.ORDER,
+        path: URLS.ORDERS + "/:id",
         element: <div>Single order Page</div>,
         isPrivate: true,
       },

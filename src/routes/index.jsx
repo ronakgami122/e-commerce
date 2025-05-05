@@ -10,7 +10,6 @@ const Routing = () => {
 
   return (
     <Routes>
-
       {/* Public routes */}
       <Route element={<PublicLayout />}>
         {publicRoutes.map(({ id, element, path, ...otherData }) => (

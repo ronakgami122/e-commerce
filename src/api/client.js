@@ -4,7 +4,13 @@ import { METHODS } from "../constants";
 export const api = {
   AUTH: {
     login: ({ data, ...config }) =>
-      client({ method: METHODS.POST, baseURL: 'https://fakestoreapi.com', url: "/auth/login", data, ...config }),
+      client({
+        method: METHODS.POST,
+        baseURL: "https://fakestoreapi.com",
+        url: "/auth/login",
+        data,
+        ...config,
+      }),
   },
   PRODUCTS: {
     getAll: ({ data, ...config }) =>
@@ -12,11 +18,15 @@ export const api = {
     getById: ({ id, data, ...config }) =>
       client({ url: `/products/${id}`, data, ...config }),
     getByCategory: ({ categoryName, data, ...config }) =>
-      client({ url: `/category/${categoryName}`, data, ...config }),
+      client({
+        url: `/products/category?type=${categoryName}`,
+        data,
+        ...config,
+      }),
   },
   CATEGORIES: {
     getAll: ({ data, ...config }) =>
-      client({ url: "/categories", data, ...config }),
+      client({ url: "/products/category", data, ...config }),
   },
   USERS: {
     getAll: ({ data, ...config }) => client({ url: "/users", data, ...config }),

@@ -2,11 +2,10 @@ const URLS = {
   INITIAL: "/",
   LOGIN: "/login",
   PRODUCTS: "/products",
-  PRODUCT: "/products/:id",
+  WISHLIST: "/wishlist",
   CART: "/cart",
   CHECKOUT: "/checkout",
   ORDERS: "/orders",
-  ORDER: "/orders/:id",
 };
 
 export { URLS };

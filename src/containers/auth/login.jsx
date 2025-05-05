@@ -7,6 +7,8 @@ import { loginValidationSchema } from "../../utils/helper";
 import CustomInput from "../../shared/customInput";
 import CustomButton from "../../shared/customButton";
 import { URLS } from "../../constants/urls";
+import { COLORS } from "../../utils/colors";
+import { IMAGES } from "../../assets";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -40,69 +42,73 @@ const LoginPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
-          mt: 8,
-          borderRadius: 2,
-          backgroundColor: "headerPrimary",
-        }}
-      >
-        <Typography
-          variant="h5"
+    <Container maxWidth="lg">
+      <Container maxWidth="sm">
+        <Paper
+          elevation={3}
           sx={{
-            fontWeight: 600,
-            mb: 3,
-            textAlign: "center",
-            color: "purple",
+            p: 4,
+            mt: 8,
           }}
         >
-          Login
-        </Typography>
-
-        {error && (
-          <Typography color="error" sx={{ mb: 2, textAlign: "center" }}>
-            {error}
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 700,
+              mb: 3,
+              textAlign: "center",
+            }}
+          >
+            Login
           </Typography>
-        )}
 
-        <Formik
-          initialValues={{ username: "", password: "" }}
-          validationSchema={loginValidationSchema}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <CustomInput
-              name="username"
-              label="Username"
-              placeholder="Enter your username"
-            />
-            <CustomInput
-              name="password"
-              label="Password"
-              type="password"
-              password
-              placeholder="Enter your password"
-            />
-            <Box mt={3}>
-              <CustomButton
-                type="submit"
-                loading={loading}
-                sx={{
-                  backgroundColor: "purple",
-                  "&:hover": {
-                    backgroundColor: "pink",
-                  },
-                }}
-              >
-                Login
-              </CustomButton>
-            </Box>
-          </Form>
-        </Formik>
-      </Paper>
+          {error && (
+            <Typography color="error" sx={{ mb: 2, textAlign: "center" }}>
+              {error}
+            </Typography>
+          )}
+
+          <Formik
+            initialValues={{ username: "", password: "" }}
+            validationSchema={loginValidationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <CustomInput
+                name="username"
+                label="Username"
+                placeholder="Enter your username"
+              />
+              <CustomInput
+                name="password"
+                label="Password"
+                type="password"
+                password
+                placeholder="Enter your password"
+              />
+              <Box mt={3}>
+                <CustomButton
+                  loading={loading}
+                  variant="contained"
+                  sx={{
+                    color: "white",
+                    fontWeight: 600,
+                  }}
+                  size="large"
+                  type="submit"
+                  fullWidth
+                >
+                  Login
+                </CustomButton>
+              </Box>
+            </Form>
+          </Formik>
+        </Paper>
+      </Container>
+      {/* add IMAGES.login here */}
+      <div className="mt-6 items-center justify-center flex">
+        <img src={IMAGES.login} />
+      </div>
     </Container>
   );
 };

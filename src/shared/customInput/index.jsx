@@ -5,6 +5,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { COLORS } from "../../utils/colors";
 
 const CustomInput = ({
   label,
@@ -33,12 +34,35 @@ const CustomInput = ({
       type={password && !showPassword ? "password" : "text"}
       error={Boolean(meta.touched && meta.error)}
       helperText={meta.touched && meta.error ? meta.error : ""}
-      sx={{ my: 1 }}
+      sx={{
+        my: 1,
+        "& .MuiOutlinedInput-root": {
+          "& fieldset": {
+            borderColor: COLORS.gray,
+          },
+          "&:hover fieldset": {
+            borderColor: COLORS.gray,
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: COLORS.pink,
+            borderWidth: "1px",
+          },
+        },
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: COLORS.pink,
+        },
+      }}
       InputProps={{
         endAdornment: password && (
           <InputAdornment position="end">
-            <IconButton onClick={handleTogglePassword} edge="end">
-              {showPassword ? <VisibilityOff /> : <Visibility />}
+            <IconButton
+              onClick={handleTogglePassword}
+              edge="end"
+              sx={{
+                color: COLORS.pink,
+              }}
+            >
+              {showPassword ? <Visibility /> : <VisibilityOff />}
             </IconButton>
           </InputAdornment>
         ),

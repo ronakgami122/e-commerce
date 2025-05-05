@@ -1,13 +1,16 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import CustomFooter from "../shared/customFooter";
+import CustomHeader from "../shared/customHeader";
 
 const PublicLayout = () => {
   return (
-    <div>
-        {/* Add your public layout components here, such as a header or footer */}
-        <Outlet />
-    </div>
-  )
-}
+    <>
+      <CustomHeader />
+      <Outlet />
+      <CustomFooter />
+    </>
+  );
+};
 
-export default PublicLayout
+export default PublicLayout;
