@@ -7,4 +7,5 @@ export const COLORS = {
   gray: "#9196AA",
   heroBannerBg: "#F2F0FF",
   text: "#0D0E43",
+  background: "#F3F4F6",
 };

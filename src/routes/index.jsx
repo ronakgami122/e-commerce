@@ -10,25 +10,38 @@ const Routing = () => {
 
   return (
     <Routes>
+      {/* Routes without layout */}
+      {[...publicRoutes, ...authRoutes, ...privateRoutes]
+        .filter((route) => route.noLayout)
+        .map(({ id, element, path }) => (
+          <Route key={id} path={path} element={element} />
+        ))}
+
       {/* Public routes */}
       <Route element={<PublicLayout />}>
-        {publicRoutes.map(({ id, element, path, ...otherData }) => (
-          <Route key={id} path={path} element={element} {...otherData} />
-        ))}
+        {publicRoutes
+          .filter((route) => !route.noLayout)
+          .map(({ id, element, path, ...otherData }) => (
+            <Route key={id} path={path} element={element} {...otherData} />
+          ))}
       </Route>
 
       {/* Auth routes */}
       <Route element={<WithAuth />}>
-        {authRoutes.map(({ id, element, path, ...otherData }) => (
-          <Route key={id} path={path} element={element} {...otherData} />
-        ))}
+        {authRoutes
+          .filter((route) => !route.noLayout)
+          .map(({ id, element, path, ...otherData }) => (
+            <Route key={id} path={path} element={element} {...otherData} />
+          ))}
       </Route>
 
       {/* Private routes */}
       <Route element={<WithUser />}>
-        {privateRoutes.map(({ id, element, path, ...otherData }) => (
-          <Route key={id} path={path} element={element} {...otherData} />
-        ))}
+        {privateRoutes
+          .filter((route) => !route.noLayout)
+          .map(({ id, element, path, ...otherData }) => (
+            <Route key={id} path={path} element={element} {...otherData} />
+          ))}
       </Route>
 
       {/* 404 route */}

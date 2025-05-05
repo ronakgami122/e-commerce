@@ -5,12 +5,13 @@ import { COLORS } from "../../utils/colors";
 import useHome from "./useHome";
 import ProductCard from "../../components/ProductCardVertical";
 import CustomButton from "../../shared/customButton";
+import CustomLoader from "../../shared/CustomLoader";
 
 const Home = () => {
   const { products } = useHome();
 
   if (products.loading) {
-    return <div>Loading...</div>;
+    return <CustomLoader fullScreen />;
   }
 
   if (!products.data.length) {
@@ -21,7 +22,7 @@ const Home = () => {
     <>
       <div className="bg-heroBannerBg relative overflow-hidden">
         <Container maxWidth="lg">
-          <div className="min-h-[85vh] flex items-center relative">
+          <div className="flex items-center relative">
             {/* Content */}
             <div className="flex-1 z-10">
               <Typography
@@ -93,9 +94,10 @@ const Home = () => {
               fontWeight: 600,
               mb: 4,
               textAlign: "center",
+              color: COLORS.text,
             }}
           >
-              Products
+            Products
           </Typography>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

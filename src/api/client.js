@@ -36,6 +36,11 @@ export const api = {
   CARTS: {
     getAll: ({ data, ...config }) => client({ url: "/carts", data, ...config }),
     getById: ({ id, data, ...config }) =>
-      client({ url: `/carts/${id}`, data, ...config }),
+      client({
+        baseURL: "https://fakestoreapi.com",
+        url: `/carts/${id}`,
+        data,
+        ...config,
+      }),
   },
 };

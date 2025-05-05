@@ -1,103 +1,140 @@
-import React from "react";
-import {
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-  Chip,
-  Stack,
-} from "@mui/material";
-import CustomButton from "../../shared/customButton";
+import React, { useMemo } from 'react';
+import { useNavigate } from "react-router-dom";
+import { URLS } from "../../constants/urls";
+import { Card, CardMedia, CardContent, Typography, Box, Chip } from '@mui/material';
+import CustomButton from '../../shared/customButton';
+import { COLORS } from '../../utils/colors';
+import { IMAGES } from '../../assets';
+const ProductCardVertical = ({ product }) => {
+  const navigate = useNavigate();
 
-const ProductCard = ({ product }) => {
+  const discountedPrice = useMemo(() => {
+    if (!product?.price) return 0;
+    const price = parseFloat(product.price);
+    const discount = product?.discount ? parseFloat(product.discount) : 0;
+    if (isNaN(price) || isNaN(discount)) return price || 0;
+    return price - (price * discount / 100);
+  }, [product]);
+
+  const handleImageError = (e) => {
+    e.target.src = IMAGES.dummyImage;
+  };
+
+  const handleViewDetails = () => {
+    navigate(`${URLS.PRODUCTS}/${product.id}`);
+  };
+
   return (
     <Card
       sx={{
-        maxWidth: 345,
-        borderRadius: 4,
-        boxShadow: 4,
-        overflow: "hidden",
-        transition: "transform 0.3s",
-        "&:hover": {
-          transform: "scale(1.03)",
+        height: 450, // Fixed height for consistency
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: 3,
         },
       }}
     >
-      {/* Product Image */}
-      <CardMedia
-        component="img"
-        height="240"
-        image={product.image}
-        alt={product.title}
-        sx={{ objectFit: "cover" }}
-      />
-
-      <CardContent>
-        {/* Updated Title with 2 lines limit */}
-        <Typography
-          gutterBottom
-          variant="h6"
-          fontWeight={600}
-          sx={{
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            minHeight: "48px", // Approximately 2 lines of h6 text
-            mb: 1,
+      {/* Image Container */}
+      <Box sx={{ height:200 }}>
+        <CardMedia
+          component="img"
+          height="300"
+          image={product.image || IMAGES.dummyImage}
+          alt={product.title}
+          onError={handleImageError}
+          sx={{ 
+            objectFit: 'contain',
+            height: '100%'
           }}
-        >
-          {product.title}
-        </Typography>
+        />
+      </Box>
 
-        {/* Model and Brand */}
-        <Typography variant="subtitle2" color="text.secondary">
-          Model: <strong>{product.model}</strong> | Brand:{" "}
-          <strong>{product.brand}</strong>
-        </Typography>
-
-        {/* Category and Color */}
-        <Stack direction="row" spacing={1} mt={1}>
-          <Chip label={product.category} color="primary" size="small" />
-          <Chip
-            label={product.color || "black"}
-            color="secondary"
-            size="small"
-          />
-        </Stack>
-
-        {/* Price and Discount */}
-        <Box mt={2}>
-          <Typography variant="body1">
-            Price: <strong>${product.price}</strong>
+      {/* Content Container */}
+      <CardContent sx={{ 
+        flexGrow: 1, 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        p: 2 
+      }}>
+        {/* Product Info */}
+        <Box>
+          {/* Title */}
+          <Typography 
+            variant="h6" 
+            sx={{
+              mb: 1,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              height: '3em',
+              lineHeight: '1.5em'
+            }}
+          >
+            {product.title}
           </Typography>
-          <Typography variant="body2" color="error">
-            {product.discount}% off
-          </Typography>
+
+          {/* Tags */}
+          <Box sx={{ 
+            display: 'flex', 
+            gap: 1, 
+            mb: 2,
+            flexWrap: 'wrap'
+          }}>
+            <Chip 
+              label={product.category} 
+              size="small"
+              sx={{ bgcolor: COLORS.purple, color: 'white' }}
+            />
+            <Chip 
+              label={product.brand} 
+              size="small" 
+              variant="outlined"
+            />
+          </Box>
+
+          {/* Price Section */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1,
+            flexWrap: 'wrap',
+            mb: 2
+          }}>
+            <Typography variant="h6" color={COLORS.pink} fontWeight="bold">
+              ${discountedPrice.toFixed(2)}
+            </Typography>
+            {product?.discount > 0 && (
+              <>
+                <Typography 
+                  variant="body1" 
+                  color="text.secondary" 
+                  sx={{ textDecoration: 'line-through' }}
+                >
+                  ${product.price}
+                </Typography>
+                <Chip 
+                  label={`${product.discount}% OFF`} 
+                  color="error" 
+                  size="small" 
+                />
+              </>
+            )}
+          </Box>
         </Box>
 
-        {/* Updated Description Preview */}
-        <Typography
-          variant="body2"
-          mt={2}
-          color="text.secondary"
-          sx={{
-            display: "-webkit-box",
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            minHeight: "42px", // Approximately 2 lines of text
-          }}
+        {/* Button */}
+        <CustomButton 
+          fullWidth 
+          sx={{ mt: 'auto' }}
+          onClick={handleViewDetails}
         >
-          {product.description}
-        </Typography>
-
-        {/* Action Button */}
-        <CustomButton fullWidth sx={{ mt: 2 }}>
           View Details
         </CustomButton>
       </CardContent>
@@ -105,4 +142,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ProductCardVertical;

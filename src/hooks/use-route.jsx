@@ -3,6 +3,9 @@ import Login from "../containers/auth/login";
 import { URLS } from "../constants/urls";
 import Home from "../containers/home";
 import Products from "../containers/products";
+import ProductDetails from "../containers/productDetail";
+import Cart from "../containers/cart";
+import Favorites from "../containers/favorites";
 
 const useRoutes = () => {
   const allRoutes = useMemo(
@@ -22,13 +25,14 @@ const useRoutes = () => {
       {
         id: "product",
         path: URLS.PRODUCTS + "/:id",
-        element: <div>Single Product Page</div>,
+        element: <ProductDetails />,
         isPublic: true,
+        noLayout: true,
       },
       {
         id: "wishlist",
         path: URLS.WISHLIST,
-        element: <div>Favorite Items(Wishlist)</div>,
+        element: <Favorites />,
         isPublic: true,
       },
       {
@@ -40,7 +44,7 @@ const useRoutes = () => {
       {
         id: "cart",
         path: URLS.CART,
-        element: <div>Cart Page</div>,
+        element: <Cart />,
         isPrivate: true,
       },
       {

@@ -2,14 +2,18 @@ import React from "react";
 import Routing from "./routes";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "./redux/store";
+import CustomLoader from "./shared/CustomLoader";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routing />
-      </BrowserRouter>
+      <PersistGate loading={<CustomLoader fullScreen />} persistor={persistor}>
+        <BrowserRouter>
+          <Routing />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   );
 };
