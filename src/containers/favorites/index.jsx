@@ -14,7 +14,7 @@ const Favorites = () => {
   }
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Typography
         variant="h4"
         sx={{

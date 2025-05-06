@@ -24,6 +24,7 @@ yarn-error.log*
 
 # Dependency locks
 package-lock.json
+bun.lock
 
 # Optional: OS-specific
 Thumbs.db

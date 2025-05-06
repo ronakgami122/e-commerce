@@ -84,6 +84,7 @@ const CartCard = ({ item, onUpdateQuantity, onRemove }) => {
         {/* Title */}
         <Typography
           variant="h6"
+          className="text"
           sx={{
             fontWeight: 600,
             overflow: "hidden",
@@ -159,6 +160,7 @@ const CartCard = ({ item, onUpdateQuantity, onRemove }) => {
 
               <Typography
                 variant="body1"
+                className="text"
                 sx={{ minWidth: "30px", textAlign: "center" }}
               >
                 {item.quantity}

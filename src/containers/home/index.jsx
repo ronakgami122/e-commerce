@@ -21,7 +21,7 @@ const Home = () => {
   return (
     <>
       <div className="bg-heroBannerBg relative overflow-hidden">
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <div className="flex items-center relative">
             {/* Content */}
             <div className="flex-1 z-10">
@@ -38,6 +38,7 @@ const Home = () => {
 
               <Typography
                 variant="h2"
+                className="text"
                 sx={{
                   fontWeight: 700,
                   mb: 2,
@@ -90,11 +91,11 @@ const Home = () => {
         <Container maxWidth="lg">
           <Typography
             variant="h4"
+            className="text"
             sx={{
               fontWeight: 600,
               mb: 4,
               textAlign: "center",
-              color: COLORS.text,
             }}
           >
             Products

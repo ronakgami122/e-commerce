@@ -48,7 +48,7 @@ const CustomFooter = () => {
     <footer>
       {/* Upper Footer */}
       <div className="bg-footerPrimary py-20">
-        <Container maxWidth="lg" className="grid grid-cols-4 gap-8">
+        <Container maxWidth="xl" className="grid grid-cols-4 gap-8">
           {/* Column 1 */}
           <div className="flex flex-col gap-4">
             <span className="text-4xl font-bold text-text">Hekto</span>
@@ -179,7 +179,7 @@ const CustomFooter = () => {
 
       {/* Bottom Footer */}
       <div className="bg-footerSecondary py-3">
-        <Container maxWidth="lg" className="flex justify-around items-center">
+        <Container maxWidth="xl" className="flex justify-around items-center">
           <span className="text-sm text-gray">
             ©Webecy - All Rights Reserved
           </span>

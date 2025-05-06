@@ -7,20 +7,39 @@ import {
   Snackbar,
   Alert,
   Badge,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { URLS } from "../../constants/urls";
 import { COLORS } from "../../utils/colors";
 import { setSearchQuery } from "../../redux/slices/products.Slice";
+import PersonIcon from "@mui/icons-material/Person";
 
 const CustomHeader = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-
-  // Get cart items count from Redux
+  const [anchorEl, setAnchorEl] = useState(null);
   const { cartItems } = useSelector((state) => state.cart);
   const cartItemsCount = cartItems.length;
+
+  // Check if user is logged in
+  const isLoggedIn = localStorage.getItem("token");
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    handleMenuClose();
+    navigate(URLS.INITIAL);
+  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -70,21 +89,21 @@ const CustomHeader = () => {
   return (
     <header>
       {/* Top Bar */}
-      <div className="bg-purple text-white text-md">
+      <div className="bg-purple text-md">
         <Container
-          maxWidth="lg"
+          maxWidth="xl"
           sx={{ height: "100%", backgroundColor: COLORS.purple }}
         >
           <div className="flex items-center justify-between py-3">
             {/* Left */}
             <div className="flex gap-8">
-              <span className="flex items-center gap-1">
+              <span className="flex items-center text-white gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="currentColor"
+                  stroke="white"
                   className="size-5"
                 >
                   <path
@@ -95,13 +114,13 @@ const CustomHeader = () => {
                 </svg>
                 Email
               </span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center text-white gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="currentColor"
+                  stroke="white"
                   className="size-5"
                 >
                   <path
@@ -115,28 +134,70 @@ const CustomHeader = () => {
             </div>
             {/* Right */}
             <div className="flex gap-8">
-              <span
-                className="flex items-center cursor-pointer hover:opacity-75"
-                onClick={handleLoginClick}
-              >
-                Login
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-5"
+              {isLoggedIn ? (
+                <>
+                  <span
+                    className="flex items-center text-white cursor-pointer hover:opacity-75"
+                    onClick={handleMenuOpen}
+                  >
+                    My Account
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="white"
+                      className="size-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                      />
+                    </svg>
+                  </span>
+                  <Menu
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    <MenuItem
+                      onClick={() => {
+                        handleMenuClose();
+                        navigate(URLS.ORDERS);
+                      }}
+                    >
+                      My Orders
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                  </Menu>
+                </>
+              ) : (
+                // Show login button when user is not logged in
+                <span
+                  className="flex items-center text-white cursor-pointer hover:opacity-75"
+                  onClick={() => navigate(URLS.LOGIN)}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                  />
-                </svg>
-              </span>
+                  Login
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="white"
+                    className="size-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+                    />
+                  </svg>
+                </span>
+              )}
+
               <span
-                className="flex items-center cursor-pointer hover:opacity-75"
+                className="flex items-center text-white cursor-pointer hover:opacity-75"
                 onClick={handleWishlistClick}
               >
                 Wishlist
@@ -145,7 +206,7 @@ const CustomHeader = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
-                  stroke="currentColor"
+                  stroke="white"
                   className="size-5"
                 >
                   <path
@@ -155,6 +216,7 @@ const CustomHeader = () => {
                   />
                 </svg>
               </span>
+
               <span
                 className="flex items-center cursor-pointer hover:opacity-75"
                 onClick={handleCartClick}
@@ -181,7 +243,7 @@ const CustomHeader = () => {
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
-                    stroke="currentColor"
+                    stroke="white"
                     className="size-5"
                   >
                     <path
@@ -198,10 +260,10 @@ const CustomHeader = () => {
       </div>
       {/* Middle Bar */}
       <div className="bg-background">
-        <Container maxWidth="lg">
+        <Container maxWidth="xl">
           <div className="flex items-center justify-between py-8">
             <div>
-              <span className="text-5xl font-bold text-text">Hekto</span>
+              <span className="text-5xl font-bold text">Hekto</span>
             </div>
             <div className="gap-8 flex">
               <span

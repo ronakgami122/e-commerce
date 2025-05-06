@@ -60,15 +60,40 @@ const Products = () => {
   }, [products.data, selectedPriceRanges, discountRange]);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4, height: "calc(100vh - 64px)" }}>
-      {" "}
-      {/* Adjust 64px based on your header height */}
-      <div className="flex gap-8 h-full">
+    <Container maxWidth="xl" sx={{ py: 4 }}>
+      <div className="flex gap-8">
         {/* Left Sidebar - Filters */}
-        <div className="w-1/5 mb-5">
-          <div className="sticky top-4">
-            {" "}
-            {/* Makes filters stick to top */}
+        <div 
+          className="w-1/5"
+          style={{ 
+            height: 'calc(100vh - 100px)', // Adjust based on your header height
+            position: 'sticky',
+            top: '20px'
+          }}
+        >
+          {/* Scrollable Filter Container */}
+          <Box
+            sx={{
+              maxHeight: '100%',
+              overflowY: 'auto',
+              pr: 2,
+              // Custom Scrollbar Styling
+              '&::-webkit-scrollbar': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-track': {
+                background: '#f1f1f1',
+                borderRadius: '3px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: COLORS.gray,
+                borderRadius: '3px',
+                '&:hover': {
+                  background: COLORS.pink,
+                },
+              },
+            }}
+          >
             {/* Categories Section */}
             <div className="mb-8">
               <Typography
@@ -102,8 +127,9 @@ const Products = () => {
                 )}
               </div>
             </div>
+
             {/* Price Range Section */}
-            <div>
+            <div className="mb-8">
               <Typography
                 variant="h5"
                 sx={{
@@ -127,8 +153,9 @@ const Products = () => {
                 ))}
               </div>
             </div>
+
             {/* Discount Range Section */}
-            <div className="mt-8">
+            <div className="mb-8">
               <Typography
                 variant="h5"
                 sx={{
@@ -148,27 +175,27 @@ const Products = () => {
                   min={0}
                   max={50}
                   sx={{
-                    "& .MuiSlider-rail": {
+                    '& .MuiSlider-rail': {
                       backgroundColor: COLORS.gray,
                     },
-                    "& .MuiSlider-track": {
+                    '& .MuiSlider-track': {
                       backgroundColor: COLORS.pink,
                     },
-                    "& .MuiSlider-thumb": {
+                    '& .MuiSlider-thumb': {
                       backgroundColor: COLORS.pink,
-                      "&:hover, &.Mui-focusVisible": {
+                      '&:hover, &.Mui-focusVisible': {
                         boxShadow: `0px 0px 0px 8px ${COLORS.pink}20`,
                       },
                     },
-                    "& .MuiSlider-valueLabel": {
+                    '& .MuiSlider-valueLabel': {
                       backgroundColor: COLORS.pink,
                     },
                   }}
                 />
                 <Box
                   sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     mt: 1,
                     color: COLORS.text,
                   }}
@@ -178,18 +205,22 @@ const Products = () => {
                 </Box>
               </Box>
             </div>
-          </div>
+          </Box>
         </div>
 
         {/* Right Side - Products List */}
-        <div className="w-3/4 flex flex-col">
-          {/* Filter Tags - Sticky */}
-          <div className="sticky top-0 z-10 pb-2">
+        <div className="w-3/4 flex flex-col ">
+          {/* Filter Tags Section */}
+          <Box 
+            sx={{ 
+              position: 'sticky',
+            }}
+          >
             {(selectedCategories.length > 0 ||
               selectedPriceRanges.length > 0 ||
               discountRange[0] > 0 ||
               discountRange[1] < 50) && (
-              <Box mb={3}>
+              <Box mb={3} backgroundColor={COLORS.background}>
                 <Typography variant="subtitle1" color="text.secondary">
                   {selectedCategories.length > 0 && (
                     <>Categories: {selectedCategories.join(", ")}</>
@@ -218,19 +249,34 @@ const Products = () => {
                 </Typography>
               </Box>
             )}
-          </div>
+          </Box>
 
-          {/* Scrollable Products List */}
-          <div
-            className="flex-1 overflow-y-auto pr-2"
-            style={{ maxHeight: "calc(100vh - 120px)" }}
+          {/* Products List */}
+          <Box 
+            sx={{ 
+              flexGrow: 1,
+              overflowY: 'auto',
+              height: 'calc(100vh - 150px)',
+              '&::-webkit-scrollbar': {
+                width: '6px',
+              },
+              '&::-webkit-scrollbar-track': {
+                background: '#f1f1f1',
+                borderRadius: '3px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                background: COLORS.gray,
+                borderRadius: '3px',
+                '&:hover': {
+                  background: COLORS.pink,
+                },
+              },
+            }}
           >
-            {" "}
-            {/* Adjust 120px based on your needs */}
             {loading ? (
               <CustomLoader />
             ) : filteredProducts?.length ? (
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 pr-2">
                 {filteredProducts.map((product) => (
                   <ProductCardHorizontal
                     key={product?.id || `product-${Math.random()}`}
@@ -245,7 +291,7 @@ const Products = () => {
                 </Typography>
               </div>
             )}
-          </div>
+          </Box>
         </div>
       </div>
     </Container>

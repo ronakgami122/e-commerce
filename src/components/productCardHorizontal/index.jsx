@@ -96,9 +96,9 @@ const ProductCardHorizontal = ({ product }) => {
           {/* Title */}
           <Typography
             variant="h6"
+            className="text"
             sx={{
               fontWeight: 600,
-              color: COLORS.text,
               display: "-webkit-box",
               WebkitLineClamp: 2,
               WebkitBoxOrient: "vertical",
@@ -153,7 +153,7 @@ const ProductCardHorizontal = ({ product }) => {
               }}
             >
               {product.brand && (
-                <Typography variant="body2" color="inherit">
+                <Typography variant="body2" className="text">
                   Brand:{" "}
                   <span style={{ fontWeight: 600 }}>{product.brand}</span>
                 </Typography>

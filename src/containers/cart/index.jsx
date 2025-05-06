@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import CartCard from "../../components/cartCard";
 import { COLORS } from "../../utils/colors";
 import { removeFromCart, updateQuantity } from "../../redux/slices/cart.slice";
+import CustomButton from "../../shared/customButton";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -18,13 +19,17 @@ const Cart = () => {
     dispatch(removeFromCart(itemId));
   };
 
+  const handlePayment = () => {
+    // Payment handling logic here
+  };
+
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
+    <Container maxWidth="xl" sx={{ py: 4 }}>
       <Typography
         variant="h4"
         sx={{ mb: 4, color: COLORS.text, fontWeight: 600 }}
@@ -54,20 +59,22 @@ const Cart = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            gap: 2,
           }}
         >
-          <Typography variant="h6" color={COLORS.text}>
+          <Typography variant="h6" className="text">
             Total Amount:
           </Typography>
           <Typography variant="h5" color={COLORS.pink} fontWeight="bold">
             ${totalAmount.toFixed(2)}
           </Typography>
+          <CustomButton onClick={handlePayment}>Pay Now</CustomButton>
         </Box>
       )}
 
       {cartItems.length === 0 && (
         <Box sx={{ textAlign: "center", py: 8 }}>
-          <Typography variant="h6" color="text.secondary">
+          <Typography variant="h6" className="text">
             Your cart is empty
           </Typography>
         </Box>

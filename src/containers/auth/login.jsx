@@ -42,7 +42,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Container maxWidth="sm">
         <Paper
           elevation={3}
@@ -52,6 +52,7 @@ const LoginPage = () => {
           }}
         >
           <Typography
+            className="text"
             variant="h4"
             sx={{
               fontWeight: 700,

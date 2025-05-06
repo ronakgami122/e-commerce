@@ -8,6 +8,9 @@ const useProducts = () => {
   const dispatch = useDispatch();
   const { categories, loading: categoriesLoading } = useFooter();
   const { products } = useSelector((state) => state.products);
+  const searchQuery = useSelector(
+    (state) => state.products.products.searchQuery
+  );
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,6 +19,23 @@ const useProducts = () => {
   useEffect(() => {
     dispatch(fetchProducts({}));
   }, [dispatch]);
+
+  // Filter products based on search query and categories
+  const getFilteredProducts = () => {
+    let result = selectedCategories.length ? filteredProducts : products.data;
+
+    // Apply search filter
+    if (searchQuery) {
+      result = result.filter((product) =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    return {
+      data: result,
+      loading: loading || products.loading,
+    };
+  };
 
   const fetchProductsByCategories = async (categories) => {
     setSelectedCategories(categories);
@@ -34,7 +54,7 @@ const useProducts = () => {
       );
 
       const responses = await Promise.all(promises);
-      
+
       // Extract products from each response and combine them
       const allProducts = responses.reduce((acc, response) => {
         if (response.status === "SUCCESS" && Array.isArray(response.products)) {
@@ -53,10 +73,7 @@ const useProducts = () => {
   };
 
   return {
-    // Return all products if no categories selected, otherwise return filtered products
-    products: selectedCategories.length 
-      ? { data: filteredProducts, loading }
-      : products,
+    products: getFilteredProducts(),
     categories,
     selectedCategories,
     loading: loading || products.loading || categoriesLoading,
