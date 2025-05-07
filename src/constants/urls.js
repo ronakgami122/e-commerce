@@ -5,7 +5,7 @@ const URLS = {
   WISHLIST: "/wishlist",
   CART: "/cart",
   CHECKOUT: "/checkout",
-  ORDERS: "/orders",
+  CONTACT: "/contact",
 };
 
 export { URLS };

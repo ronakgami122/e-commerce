@@ -1,11 +1,14 @@
 import { useMemo } from "react";
-import Login from "../containers/auth/login";
 import { URLS } from "../constants/urls";
+import Login from "../containers/auth/login";
 import Home from "../containers/home";
 import Products from "../containers/products";
 import ProductDetails from "../containers/productDetail";
 import Cart from "../containers/cart";
 import Favorites from "../containers/favorites";
+import Checkout from "../containers/checkout";
+import NotFound from "../components/notFound";
+import Contact from "../containers/contact";
 
 const useRoutes = () => {
   const allRoutes = useMemo(
@@ -36,6 +39,12 @@ const useRoutes = () => {
         isPublic: true,
       },
       {
+        id: "contact",
+        path: URLS.CONTACT,
+        element: <Contact />,
+        isPublic: true,
+      },
+      {
         id: "login",
         path: URLS.LOGIN,
         element: <Login />,
@@ -50,20 +59,14 @@ const useRoutes = () => {
       {
         id: "checkout",
         path: URLS.CHECKOUT,
-        element: <div>Checkout Page</div>,
+        element: <Checkout />,
         isPrivate: true,
       },
       {
-        id: "orders",
-        path: URLS.ORDERS,
-        element: <div>orders Page</div>,
-        isPrivate: true,
-      },
-      {
-        id: "order",
-        path: URLS.ORDERS + "/:id",
-        element: <div>Single order Page</div>,
-        isPrivate: true,
+        id: "404",
+        path: "*",
+        element: <NotFound />,
+        isPublic: true,
       },
     ],
     []

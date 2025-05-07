@@ -102,6 +102,9 @@ const Products = () => {
                   fontWeight: 600,
                   mb: 3,
                   color: COLORS.pink,
+                  pb: 1,
+                  borderBottom: `2px solid ${COLORS.pink}`,
+                  display: 'inline-block'
                 }}
               >
                 Categories
@@ -136,6 +139,9 @@ const Products = () => {
                   fontWeight: 600,
                   mb: 3,
                   color: COLORS.pink,
+                  pb: 1,
+                  borderBottom: `2px solid ${COLORS.pink}`,
+                  display: 'inline-block'
                 }}
               >
                 Price Range
@@ -162,6 +168,9 @@ const Products = () => {
                   fontWeight: 600,
                   mb: 3,
                   color: COLORS.pink,
+                  pb: 1,
+                  borderBottom: `2px solid ${COLORS.pink}`,
+                  display: 'inline-block'
                 }}
               >
                 Discount Range

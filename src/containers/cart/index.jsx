@@ -1,26 +1,34 @@
 import React from "react";
 import { Container, Grid, Typography, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import CartCard from "../../components/cartCard";
 import { COLORS } from "../../utils/colors";
-import { removeFromCart, updateQuantity } from "../../redux/slices/cart.slice";
+import { URLS } from "../../constants/urls";
+import {
+  removeFromCart,
+  updateQuantity,
+  clearCart,
+} from "../../redux/slices/cart.slice";
 import CustomButton from "../../shared/customButton";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.cart);
 
   const handleUpdateQuantity = (itemId, newQuantity) => {
     if (newQuantity < 1) return;
     dispatch(updateQuantity({ id: itemId, quantity: newQuantity }));
-  };
+  };  
 
   const handleRemoveItem = (itemId) => {
     dispatch(removeFromCart(itemId));
   };
 
   const handlePayment = () => {
-    // Payment handling logic here
+    dispatch(clearCart());
+    navigate(URLS.CHECKOUT);
   };
 
   const totalAmount = cartItems.reduce(
@@ -49,7 +57,7 @@ const Cart = () => {
         ))}
       </Grid>
 
-      {cartItems.length > 0 && (
+      {cartItems.length > 0 ? (
         <Box
           sx={{
             mt: 4,
@@ -59,20 +67,28 @@ const Cart = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            gap: 2,
           }}
         >
           <Typography variant="h6" className="text">
-            Total Amount:
+            Total Amount:{" "}
+            <span style={{ color: COLORS.pink, fontWeight: "bold" }}>
+              ${totalAmount.toFixed(2)}
+            </span>
           </Typography>
-          <Typography variant="h5" color={COLORS.pink} fontWeight="bold">
-            ${totalAmount.toFixed(2)}
-          </Typography>
-          <CustomButton onClick={handlePayment}>Pay Now</CustomButton>
+          <CustomButton
+            onClick={handlePayment}
+            sx={{
+              minWidth: "120px",
+              bgcolor: COLORS.pink,
+              "&:hover": {
+                bgcolor: COLORS.pink,
+              },
+            }}
+          >
+            Pay Now
+          </CustomButton>
         </Box>
-      )}
-
-      {cartItems.length === 0 && (
+      ) : (
         <Box sx={{ textAlign: "center", py: 8 }}>
           <Typography variant="h6" className="text">
             Your cart is empty
