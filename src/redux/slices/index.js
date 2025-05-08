@@ -1,5 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import productsSlice from "./products.Slice";
+import productsSlice from "./products.slice";
 import favoritesSlice from "./favorites.slice";
 import cartSlice from "./cart.slice";
 
